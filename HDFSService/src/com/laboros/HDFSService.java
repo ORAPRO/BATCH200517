@@ -1,7 +1,14 @@
 package com.laboros;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
+import org.apache.hadoop.fs.FSDataOutputStream;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
@@ -43,7 +50,36 @@ public class HDFSService extends Configured implements Tool {
 	}
 	
 	@Override
-	public int run(String[] args) throws Exception {
+	public int run(String[] args) throws Exception 
+	{
+		
+		//step-1 : Get the configuration object created in the main method
+		
+		Configuration conf = super.getConf();
+		//step : 2 Get the HDFS File System object
+		
+		FileSystem hdfs = FileSystem.get(conf);
+		
+		//step : 3 -- Create Metadata = Create Empty File + Add Metadata to Namenode
+		
+		final String inputFile = args[0];// WordCount.txt
+		
+		final String hdfsDestDir=args[1]; //user/edureka
+		
+		final Path hdfsDestDirAlongWithFileName = new Path(hdfsDestDir, inputFile); //user/edureka/WordCount.txt
+		
+		//Get the FSDOS
+		FSDataOutputStream fsdos=hdfs.create(hdfsDestDirAlongWithFileName);
+		
+		//GET THE INPUTSTREAM
+		
+		InputStream is = new FileInputStream(inputFile);
+		
+		
+		//COPY DATA THROUGH FSDOS + Datastreamer + Handling Failure
+		
+		IOUtils.copyBytes(is, fsdos, conf, Boolean.TRUE);
+		
 		return 0;
 	}
 
