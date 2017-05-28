@@ -20,6 +20,8 @@ public class HDFSService extends Configured implements Tool {
 	
 	public static void main(String[] args) 
 	{
+		
+		System.out.println("MAIN METHOD");
 		//Step: 1 Validations input and output provided
 		if(args.length!=2)
 		{
@@ -52,6 +54,7 @@ public class HDFSService extends Configured implements Tool {
 	@Override
 	public int run(String[] args) throws Exception 
 	{
+		System.out.println("IN RUN METHOD");
 		
 		//step-1 : Get the configuration object created in the main method
 		
