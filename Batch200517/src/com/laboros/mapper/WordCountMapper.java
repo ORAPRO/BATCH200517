@@ -22,9 +22,9 @@ public class WordCountMapper extends
 		if(StringUtils.isNotEmpty(inputLine))
 		{
 			final String[] words=StringUtils.splitPreserveAllTokens(inputLine, wordSeperator);
-			for (int i = 0; i < words.length; i++) 
+			for (String word: words) 
 			{
-				context.write(new Text(words[i]), new IntWritable(1));
+				context.write(new Text(word), new IntWritable(1));
 			}
 		}
 		
