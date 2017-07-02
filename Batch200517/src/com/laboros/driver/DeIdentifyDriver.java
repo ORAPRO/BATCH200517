@@ -3,11 +3,15 @@ package com.laboros.driver;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
+
+import com.laboros.mapper.DeIdentifyMapper;
 
 public class DeIdentifyDriver extends Configured implements Tool {
 
@@ -65,10 +69,10 @@ public class DeIdentifyDriver extends Configured implements Tool {
 		TextOutputFormat.setOutputPath(deIdentifyDriver, hdfsOuputDirPath);
 		deIdentifyDriver.setOutputFormatClass(TextOutputFormat.class);
 		//step-6: Setting mapper
-//		deIdentifyDriver.setMapperClass(DeIdentifyMapper.class);
+		deIdentifyDriver.setMapperClass(DeIdentifyMapper.class);
 		//step-7: Setting mapper output key and value classes
-//		deIdentifyDriver.setMapOutputKeyClass(Text.class);
-//		deIdentifyDriver.setMapOutputValueClass(NullWritable.class);
+		deIdentifyDriver.setMapOutputKeyClass(Text.class);
+		deIdentifyDriver.setMapOutputValueClass(NullWritable.class);
 		
 		deIdentifyDriver.setNumReduceTasks(0);
 		//step-8: setting reducer
