@@ -57,6 +57,7 @@ public class MyRecordReader extends RecordReader<MyKey,MyValue> {
 			if(value == null){
 				value = new MyValue();
 			}
+			//a	1386023259550	on	22	23
 			Text line = reader.getCurrentValue();
 			String[] tokens = line.toString().split("\t");
 			key.setSensorType(new Text(tokens[0]));
